@@ -85,7 +85,7 @@ const TodoAddForm: React.FC<Props> = ({ addTodo, getUserById }) => {
           })}
         </select>
 
-        {selectedUserErr && <span className="error">Please choose a user</span>}
+        {selectedUserErr && <span className="error">{selectedUserErr}</span>}
       </div>
 
       <button type="submit" data-cy="submitButton">
