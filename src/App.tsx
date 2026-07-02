@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import './App.scss';
 import todosFromServer from './api/todos';
-
+import usersFromServer from './api/users';
 import TodoAddForm from './components/TodoAddForm/TodoAddFrom';
 import { TodoList } from './components/TodoList';
-import { getUserById } from './helpers/getUserById';
 import { Todo } from './types/todos';
+
+export function getUserById(userId: number) {
+  return usersFromServer.find(user => user.id === userId) || undefined;
+}
 
 const updateTodos: Todo[] = todosFromServer.map(todo => ({
   ...todo,
-  user: getUserById(todo.userId) || undefined,
+  user: getUserById(todo.userId),
 }));
 
 export const App: React.FC = () => {
@@ -18,7 +21,7 @@ export const App: React.FC = () => {
   const addNewTodo = (newTodo: Todo): void => {
     const todo = {
       ...newTodo,
-      id: Math.max(...todos.map(todod => todod.id)) + 1,
+      id: Math.max(...todos.map(item => item.id)) + 1,
     };
 
     setTodos(prev => [...prev, todo]);
@@ -27,7 +30,7 @@ export const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Add todo form</h1>
-      <TodoAddForm addTodo={addNewTodo} />
+      <TodoAddForm addTodo={addNewTodo} getUserById={getUserById} />
       <TodoList todos={todos} />
     </div>
   );
