@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import users from '../../api/users';
 import { Todo, User } from '../../types/todos';
 
 interface Props {
   addTodo: (newTodo: Todo) => void;
   getUserById: (userId: number) => User | undefined;
+  users: User[];
 }
 
-const TodoAddForm: React.FC<Props> = ({ addTodo, getUserById }) => {
+const TodoAddForm: React.FC<Props> = ({ addTodo, getUserById, users }) => {
   const [title, setTitle] = useState('');
   const [titleErr, setTitleErr] = useState('');
   const [selectedUser, setSelectedUser] = useState(0);
